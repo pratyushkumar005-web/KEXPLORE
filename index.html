@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Long Way Events — Find your next night out</title>
+<meta name="description" content="Browse upcoming events, search by category and register in under a minute.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#events">Skip to events</a>
+<header class="nav">
+  <a class="brand" href="#top">LONG WAY<span>.</span></a>
+  <nav id="menu" aria-label="Main">
+    <a href="#events">Events</a><a href="#about">About</a><a href="#mine">My tickets <b id="count">0</b></a>
+  </nav>
+  <button class="icon" id="theme" aria-label="Toggle dark or light mode">◐</button>
+  <button class="icon burger" id="burger" aria-label="Open menu" aria-expanded="false">☰</button>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">Live events · Fall 2026</p>
+      <h1>EVENTS WORTH<br>THE LONG WAY<br>HOME.</h1>
+      <p class="lead">Gigs, workshops, talks and food nights. Pick one, register in a minute, and show up.</p>
+      <a class="btn" href="#events">Browse events</a>
+    </div>
+    <aside class="next" id="next" aria-live="polite"></aside>
+    <svg class="pines" viewBox="0 0 800 120" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 120V80l20-50 20 50-10 0 25-60 25 60h-12l22-45 22 45h-14l28-70 28 70H110l24-40 24 40h-16l30-60 30 60h-14l22-45 22 45h-14l26-65 26 65h-14l24-50 24 50H430l28-70 28 70h-14l22-40 22 40h-14l26-60 26 60h-14l24-45 24 45h-14l28-65 28 65H800v40z"/></svg>
+  </section>
+
+  <section id="featured" class="wrap">
+    <h2>FEATURED.</h2>
+    <div class="grid" id="featuredGrid"></div>
+  </section>
+
+  <section id="events" class="wrap">
+    <h2>ALL UPCOMING EVENTS.</h2>
+    <div class="tools">
+      <label class="search"><span class="sr">Search events</span>
+        <input id="q" type="search" placeholder="Search by name, city or topic"></label>
+      <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
+    </div>
+    <p id="result" class="muted" aria-live="polite"></p>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" hidden>
+      <h3>No events match that search.</h3>
+      <p>Clear the search or choose another category.</p>
+      <button class="btn ghost" id="reset">Show all events</button>
+    </div>
+  </section>
+
+  <section id="mine" class="wrap">
+    <h2>MY TICKETS.</h2>
+    <ul class="tickets" id="tickets"></ul>
+  </section>
+
+  <section id="about" class="wrap about">
+    <h2>A LITTLE WILD. A LITTLE WORN IN.</h2>
+    <p>Long Way is a small events platform for people who would rather be in the room. Every event lists its date, venue and what to expect, and registration takes four fields. Your tickets stay saved in this browser.</p>
+  </section>
+</main>
+
+<footer class="foot"><span>LONG WAY<span class="dot">.</span> Made for the road.</span></footer>
+
+<dialog id="modal" aria-labelledby="mTitle">
+  <button class="close" id="close" aria-label="Close">✕</button>
+  <div class="m-art" id="mArt"></div>
+  <div class="m-body">
+    <h3 id="mTitle"></h3>
+    <p class="muted" id="mMeta"></p>
+    <div class="count" id="count-down" aria-label="Time until event"></div>
+    <p id="mDesc"></p>
+    <form id="form" novalidate>
+      <h4>Register</h4>
+      <div class="f"><label for="name">Full name</label><input id="name" autocomplete="name"><small></small></div>
+      <div class="f"><label for="email">Email address</label><input id="email" type="email" autocomplete="email"><small></small></div>
+      <div class="f"><label for="phone">Phone number</label><input id="phone" type="tel" autocomplete="tel" placeholder="10-digit mobile number"><small></small></div>
+      <div class="f"><label for="event">Event</label><select id="event"></select><small></small></div>
+      <button class="btn" type="submit">Register now</button>
+    </form>
+    <div class="done" id="done" hidden tabindex="-1">
+      <h4>You're registered.</h4>
+      <p id="doneMsg"></p>
+      <button class="btn ghost" id="doneClose">Back to events</button>
+    </div>
+  </div>
+</dialog>
+<script src="script.js"></script>
+</body>
+</html>
