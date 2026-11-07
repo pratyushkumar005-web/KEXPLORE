@@ -2,11 +2,11 @@
 
 A modern, fully responsive event management website where users can explore upcoming events, view details and register for the ones they like. Built with plain **HTML5, CSS3 and JavaScript** (no frameworks or build tools).
 
-- **Live site:** _add your Netlify / Vercel / GitHub Pages link here_
-- **Repository:** _add your GitHub link here_
+- **Live site:** https://kexplore-three.vercel.app/
+- **Repository:** https://github.com/pratyushkumar005-web/KEXPLORE
 
 ## Problem statement
-Build a visually appealing event platform with a hero section, featured and upcoming events, search and category filters, an event details view, and a registration form with JavaScript validation and a confirmation message. The site must work on mobile, tablet and desktop. Bonus goals: dark/light mode, countdown timers, animations and Local Storage for registrations.
+Build a visually appealing event platform with a hero section, featured and upcoming events, search and category filters, an event details view, and a registration form with JavaScript validation and a confirmation message. The site must work on mobile, tablet and desktop.
 
 ## Features
 - Hero section introducing the platform, with a live countdown to the next event
