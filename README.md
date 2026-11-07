@@ -1,45 +1,73 @@
 # Long Way Events
 
-A responsive event management website built with plain **HTML5, CSS3 and JavaScript** (no frameworks). Visitors can browse upcoming events, search and filter them, read event details, and register through a validated form. The visual style follows the Hollow Pines template: dusk-orange on night pine, big condensed headlines and a pine-line skyline.
+A modern, fully responsive event management website where users can explore upcoming events, view details and register for the ones they like. Built with plain **HTML5, CSS3 and JavaScript** (no frameworks or build tools).
 
-**Live site:** _add your Netlify / Vercel / GitHub Pages link_
-**Repository:** _add your GitHub link_
+- **Live site:** _add your Netlify / Vercel / GitHub Pages link here_
+- **Repository:** _add your GitHub link here_
+
+## Problem statement
+Build a visually appealing event platform with a hero section, featured and upcoming events, search and category filters, an event details view, and a registration form with JavaScript validation and a confirmation message. The site must work on mobile, tablet and desktop. Bonus goals: dark/light mode, countdown timers, animations and Local Storage for registrations.
 
 ## Features
-- Hero section with a live countdown to the next event
-- Featured events plus a full event grid with image-style cards (name, date, venue, description)
-- Search by name, venue or topic, combined with category filters
-- Event details dialog with its own countdown timer
-- Registration form (name, email, phone, event) with JavaScript validation, inline error messages and a confirmation screen
-- Registrations saved in **Local Storage** (duplicate email per event is blocked) and shown under "My tickets"
-- Dark / light mode that remembers your choice and respects the system setting
-- Responsive layout for mobile, tablet and desktop; keyboard focus styles, ARIA labels and reduced-motion support
+- Hero section introducing the platform, with a live countdown to the next event
+- Featured events section and a full "All upcoming events" grid
+- Event cards showing name, date, venue, category, short description and a coloured cover
+- Search by name, venue, category or description
+- Category filter chips (All, Music, Tech, Food, Workshop, Talk) that work together with search
+- Event details dialog with full description, venue and date
+- Registration form: name, email, phone number and selected event
+- JavaScript validation with inline error messages, then a confirmation screen with a booking reference
+- Fully responsive layout
+- Dark / light mode, remembered between visits and defaulting to the system setting
+- Countdown timers (hero and event dialog) updating every second
+- Animations: hero heading entrance, card hover, dialog pop-in, smooth scrolling
+- Local Storage registration management: saved tickets, duplicate prevention and a "My tickets" list with a live counter in the navbar
 
-## Project structure
-```
-index.html   page structure and the event dialog
-style.css    design tokens, layout, responsive rules, themes
-script.js    event data, rendering, filters, countdowns, validation, storage
-```
+## Tech stack
+| Area | Used |
+|---|---|
+| Structure | HTML5 (semantic elements, `<dialog>`) |
+| Styling | CSS3 (custom properties, Grid, Flexbox, media queries, animations) |
+| Logic | Vanilla JavaScript (ES6+) |
+| Storage | Browser Local Storage |
+| Fonts | Google Fonts: Big Shoulders Display, DM Sans |
+| Version control | Git and GitHub |
 
-## How it works
-- `EVENTS` in `script.js` is the single source of data. Add an object there and the cards, filters and registration dropdown update automatically.
-- `rules` holds the validation functions: name (letters, 2+ chars), email (regex), phone (10 digits, optional +91 or 0 prefix) and a required event.
-- Registrations are stored under the `longway.registrations` key; the theme under `longway.theme`.
+## Implementation
 
-## Run locally
-Open `index.html` in a browser, or run `npx serve .`
+### 1. Event data
+All events live in one array, `EVENTS`, at the top of `script.js`. Each object has an `id`, `name`, `cat` (category), `date` (ISO string), `venue`, `desc`, a `feat` flag for featured events and two colours `c` used for the card cover. To add an event, add one object. The cards, category chips, dropdown and countdowns update automatically.
 
-## Deploy
-- **GitHub Pages:** Settings → Pages → deploy from `main` branch, root folder.
-- **Netlify / Vercel:** import the repository; no build step is needed.
+### 2. Rendering
+`card(e)` returns the HTML for one event card. `render()` filters `EVENTS` by the selected category and the search text, then rebuilds the grid, the result count and the "no results" state. User-facing text goes through `esc()` to escape HTML characters.
 
-## Git workflow
-```
-git init
-git add .
-git commit -m "Add event management site"
-git branch -M main
-git remote add origin <your-repo-url>
-git push -u origin main
-```
+### 3. Search and filter
+The search input fires `render()` on every keystroke. Category chips set the `cat` variable and call `render()`. A card is shown only if it matches **both** the category and the search text. A "Show all events" button resets both.
+
+### 4. Event details
+Clicking a card button opens a native `<dialog>` with `showModal()`. This gives a backdrop, focus trapping and Esc-to-close for free. The dialog fills itself from the selected event and preselects that event in the registration form.
+
+### 5. Countdown timers
+`parts(e)` converts the time left until an event into days, hours, minutes and seconds. A single `setInterval` updates the hero countdown (the soonest future event) and the dialog countdown every second.
+
+### 6. Form validation
+Validation rules live in a `rules` object. Each rule returns an empty string when valid, or an error message.
+
+| Field | Rule |
+|---|---|
+| Name | 2 to 60 characters, letters, spaces, apostrophes, dots and hyphens |
+| Email | Must match `name@domain.tld` |
+| Phone | 10 digits, with an optional `+91` or `0` prefix, spaces and hyphens ignored |
+| Event | An event must be selected |
+
+Fields are checked when the user leaves them (`blur`) and again on submit. Invalid fields get a red border and message, valid ones a green border. On a failed submit, focus moves to the first invalid field.
+
+### 7. Registration and Local Storage
+On a valid submit, a registration object is created with a random reference like `LW-4K9P2X`, the event, name, email and phone. It is appended to the array stored under the key `longway.registrations`. The same email cannot register twice for the same event. The confirmation message replaces the form, and the "My tickets" section and navbar counter update immediately. Reads and writes are wrapped in `try/catch`, so the site still works if storage is blocked.
+
+### 8. Theme
+The theme is set with `data-theme` on `<html>`. CSS variables such as `--bg`, `--panel` and `--text` change per theme, so no component needs separate dark styles. The choice is saved under `longway.theme`.
+
+
+
+
